@@ -31,9 +31,9 @@
 ?>    
     <p>THREE</p>
 <?php
-    $first = "Phoebe";
-    $middle = "Zack";
-    $last = "Stein";
+    $first = "Amanda";
+    $middle = "Kate";
+    $last = "Golds";
     $age = 35;
     print "$last, $first $middle ($age)";
     print "<ul>\n <li>$last, $first $middle ($age)</li>
