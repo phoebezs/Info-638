@@ -169,6 +169,22 @@ do {
 //       ^^^^^^^^^^^^^^^^^^^^^^- if 1 + 1 then 2 breaks the loop*/
 
 
+########### Professor's solution #############
+$numheads = 0;
+$numtails = 0;
+$numheadswant = 2;
+
+while ($numheadsinrow < $numheadswant) {
+    $result = mt_rand (0,1);
+    if ($result == 1) {
+        #head stuff img
+        ++$numheadsinrow;
+    } else {
+        #tails stuff
+        $numheadsinrow = 0;
+    
+    }
+}
 
 ?>
 </body>
