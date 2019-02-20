@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Code Homework 2</title>
+    <title>Code Homework 2 COPY</title>
 
     <style>
 h2 {
@@ -85,8 +85,7 @@ Stop the loop and print out to the page the number of tosses this took
 
 $cointoss = mt_rand(0,1);
 
-function cointoss () {
-    $cointoss = mt_rand(0,1);
+function cointoss ($cointoss) {
     $headsimg = '<img src="https://webdevdbcourses.prattsi.org/~pstein5/pennyhead.jpg" width="80" height="80"/>';
     $tailsimg = '<img src="https://webdevdbcourses.prattsi.org/~pstein5/pennytails.jpg" width="80" height="80"/>';
     if ($cointoss == 1){
@@ -100,61 +99,50 @@ function cointoss () {
 $coinflip = 1;
 echo "<p>Flipping a coin once...<br></p>";
 while($coinflip <= 1) {
-    cointoss ();
+    $cointoss = mt_rand(0,1);
+    cointoss ($cointoss);
     $coinflip++;
 }
 
 $threeflip = 1;
 echo "<p>Flipping a coin three times...<br></p>";
 while($threeflip <= 3) {
-    cointoss ();
+    $cointoss = mt_rand(0,1);
+    cointoss ($cointoss);
     $threeflip++;
 }
 
 $fiveflip = 1;
 echo "<p>Flipping a coin five times...<br></p>";
 while($fiveflip <= 5) {
-    cointoss ();
+    $cointoss = mt_rand(0,1);
+    cointoss ($cointoss);
     $fiveflip++;
 }
 
 $sevenflip = 1;
 echo "<p>Flipping a coin seven times...<br></p>";
 while($sevenflip <= 7) {
-    cointoss ();
+    $cointoss = mt_rand(0,1);
+    cointoss ($cointoss);
     $sevenflip++;
 }
 
 $nineflip = 1;
 echo "<p>Flipping a coin nine times...<br></p>";
 while($nineflip <= 9) {
-    cointoss ();
+    $cointoss = mt_rand(0,1);
+    cointoss ($cointoss);
     $nineflip++;
 }
 
 
 print "<p><br>Begin the coin flipping...</p>";
-/*$twoheads = 0;
-for ($twoheads = 1 ; $twoheads <= 20; $twoheads++) {
-    $cointoss = mt_rand(0,1);
-    cointoss ();
-    if ($cointoss == 1) { 
-        do {
-        cointoss ();
-    } while ($cointoss == 1);
 
-    }
-}
-
-(do {
-    cointoss ();
-} while ($cointoss == 1);*/
-
-########################## NOT MY CODE BELOW ##########################
 
 /*function cointoss () {
     return mt_rand(0,1);  // return zero or one
-}
+}*/
 
 $previous_toss = null;
 $toss = null;
@@ -162,11 +150,12 @@ do {
     if ($toss !== null) {  // only store a new "previous_toss" if not the first iteration
         $previous_toss = $toss;  // store last ieration's value
     }
-    $toss = cointoss();  // get current iteration's value
-    echo ($toss ? '<img src="heads.jpg"/>' : '<img src="tails.jpg"/>') , "\n";
+    $toss = cointoss($cointoss);  // get current iteration's value
+    echo ($toss ? '<img src="https://webdevdbcourses.prattsi.org/~pstein5/pennyhead.jpg" width="80" height="80"/>' : '<img src="https://webdevdbcourses.prattsi.org/~pstein5/pennytails.jpg" width="80" height="80"/>') , "\n";
     //    ^^^^^- if a non-zero/non-falsey value, it is heads, else tails
 } while ($previous_toss + $toss != 2);
-//       ^^^^^^^^^^^^^^^^^^^^^^- if 1 + 1 then 2 breaks the loop*/
+//       ^^^^^^^^^^^^^^^^^^^^^^- if 1 + 1 then 2 breaks the loop
+
 
 
 

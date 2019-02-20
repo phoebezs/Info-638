@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <ttile>Hello again!</title>
+    <title>Hello again!</title>
 <style>
 table, td {
     border: 2px solid black;
