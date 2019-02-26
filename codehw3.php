@@ -3,9 +3,7 @@
     <title>Code Homework 3</title>
 
     <style>
-div {
-    text-align: center;
-}
+
 
 h2 {
     font-family: helvetica; 
@@ -16,7 +14,7 @@ h3 {
 }
 
 p {
-    font-family: helvetica; color: blue;
+    font-family: helvetica;
 }
 
 table, th, td {
@@ -35,7 +33,13 @@ td {
     height: 20px; padding: 10px; text-align: left;
 }
 
-tr:hover {background-color: #f5f5f5;}
+tr:hover {
+    background-color: #f5f5f5;
+}
+
+#total {
+    text-align: center; background-color: #4CAF50; color: white; white-space: pre;
+}
 
 </style>
 </head>
@@ -74,7 +78,7 @@ foreach ($bookdata as $row) {
 echo "</table>";
 echo "</pre>";
 
-print "<div><p>"."Your total price is: <br>" . "$" . (($bookdata[0][5]) + ($bookdata[1][5]) + ($bookdata[2][5]) + ($bookdata[3][5]) + ($bookdata[4][5]) + ($bookdata[5][5]))."</p></div>";
+print "<div><p id=\"total\">"."Your total price is: <br>" . "$" . (($bookdata[0][5]) + ($bookdata[1][5]) + ($bookdata[2][5]) + ($bookdata[3][5]) + ($bookdata[4][5]) + ($bookdata[5][5]))."</p></div>";
 
 
 #COIN TOSS, CONTINUED
