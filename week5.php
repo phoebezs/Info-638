@@ -94,8 +94,9 @@ $studentinfo = array (
 print_r ($studentinfo) . "<br>";
 
 #print $studentinfo["5678"]; //not a value, but whole array, so sends error
-print $studentinfo["5678"][2];
+print $studentinfo["5678"][2] . "<br>";
 
+print "foreach loops access data inside an array" . "<br>";
 foreach ($studentinfo as $studentid => $student_array) {     // foreach loops access data inside an array
     print "<div>Student ID: $studentid</div>";
     print "GPA: " . $student_array[0] . "Country: " . $student_array[1];
@@ -104,6 +105,7 @@ foreach ($studentinfo as $studentid => $student_array) {     // foreach loops ac
     }
 }
 
+print "<br>";
 $string_ex = "Hello world";
 print ($string_ex[1]);
 
