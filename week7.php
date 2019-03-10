@@ -8,7 +8,7 @@ $hn = 'localhost';
 $db = 'animal_shelter';
 $un = 'root';
 #no password on my macbook?
-$pw = 
+$pw = '';
 # Make the connection to mysql using the credentials above
 $conn = new mysqli($hn, $un, $pw, $db);
 if ($conn->connect_error) die($conn->connect_error);
