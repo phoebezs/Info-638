@@ -53,6 +53,8 @@ while ($row = $result->fetch_assoc())
 	echo $row["creator_id"]." ".$row["first_name"]." ".$row["last_name"]."<br>";
 }
 
+echo "Success!";
+
 ?>
 </body>
 </html>
