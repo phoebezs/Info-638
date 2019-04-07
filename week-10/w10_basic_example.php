@@ -2,6 +2,7 @@
 <html>
 <body>
 <?php
+/*
 # Create variables to store our db login information
 $hn = 'localhost';
 $db = 'animal_shelter';
@@ -31,6 +32,26 @@ while ($row = $result->fetch_assoc()) {
 # close the database connection
 $result->close();
 $conn->close();
+*/
+
+echo "<h4>Week 10 Exercise</h4>";
+
+$hn = 'localhost';
+$db = 'Museum';
+$un = 'root';
+$pw = '';
+
+$conn = new mysqli($hn, $un, $pw, $db);
+if ($conn->connect_error) die($conn->connect_error);
+
+$query = "SELECT * from creator";
+$result = $conn->query($query);
+if (!$result) die($conn->error);
+
+while ($row = $result->fetch_assoc())
+{
+	echo $row["creator_id"]." ".$row["first_name"]." ".$row["last_name"]."<br>";
+}
 ?>
 </body>
 </html>
