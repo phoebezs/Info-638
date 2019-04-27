@@ -3,7 +3,7 @@ session_start();
 $_SESSION = array();
 session_destroy();
 
-include_once ("header.php");
+include_once ("headerpractice.php");
 ?>
 
 
