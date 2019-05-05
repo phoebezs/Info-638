@@ -1,24 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+    <title>Add a public toilet</title>
+    <link rel="stylesheet" type="text/css" href="includes/pstein5.css">
+	</head>
+<body>
+
 <?php
 include_once ("includes/header.php"); 
-# Start session
-session_start();
-# get the form data
-if (isset($_POST['username']) and isset($_POST['passwd'])) {
-    # check it against the db
-    $conn = new mysqli("localhost", "root", "", "pstein5");
+
+# get the login form data
+if (isset($_POST['submit'])) {
+    if ( empty($_POST['username']) || empty($_POST['password']) ) {
+		$message = '<p class="error">Please fill out all of the form fields!</p>';
+} else {
+    $conn = new mysqli($hn, $un, $pw, $db);
     if ($conn->connect_error) die($conn->connect_error);
 
     #sanitize data coming from user
     $username_entered = sanitizeMySQL($conn, $_POST['username']);
-    $password_entered = sanitizeMySQL($conn, $_POST['passwd']);
-
-    # if known user continue to form 
+    $password_entered = sanitizeMySQL($conn, $_POST['password']);
     
     #need to salt and hash password first
     $salt1 = "nsjdw8ey";
     $salt2 = "3ou49dsh";
-    $pwdwithsalts = $salt1.$password_entered.$salt2;
-    $hashedpwd = hash('ripemd128', $pwdwithsalts);
+    $hashedpwd = hash('ripemd128', $salt1.$password_entered.$salt2);
 
     $query = 'SELECT * FROM users WHERE username="'. $username_entered .'" AND password="'.$hashedpwd.'"';
 	
@@ -32,39 +38,41 @@ if (isset($_POST['username']) and isset($_POST['passwd'])) {
 		print "User not recognized";
 		die("<p><a href='includes/login.php'>Go to Login</a>");
 	}
-
-} else {
-# else, redirect or show error and kill page. 
-
 }
-?>
-<!DOCTYPE html>
-<html>
-	<head>
-    <title>Add a public toilet</title>
-    <link rel="stylesheet" type="text/css" href="includes/pstein5.css">
-	</head>
-<body>
+}
 
-<h1>Add a public toilet</h1>
-
-<!--ANIMAL SHELTER ADD PET BELOW, EDIT!!-->
-
-<?php
-
+#Add a toilet to the database
 if (isset($_POST['submit'])) { //check if the form has been submitted
-	if ((empty($_POST['name'])) || (empty($_POST['age'])) || (empty($_POST['sex'])) || (empty($_POST['species'])) || (empty($_POST['caretaker_id'])) ) {
+    if ((empty($_POST['name'])) || (empty($_POST['location'])) || (empty($_POST['hours'])) || (empty($_POST['boro_id'])) || 
+        (empty($_POST['boro_name'])) || (empty($_POST['gender'])) || (empty($_POST['handicap_access'])) || 
+        (empty($_POST['change_table'])) || (empty($_POST['stalls'])) ) {
 		$message = '<p class="error">Please fill out all of the form fields!</p>';
 	} else {
 		$conn = new mysqli($hn, $un, $pw, $db);
-		if ($conn->connect_error) die($conn->connect_error);
+        if ($conn->connect_error) die($conn->connect_error);
+        
 		$name = sanitizeMySQL($conn, $_POST['name']);
-		$age = sanitizeMySQL($conn, $_POST['age']);			
-		$sex = sanitizeMySQL($conn, $_POST['sex']);
-		$species = sanitizeMySQL($conn, $_POST['species']);
-		$caretaker_id = sanitizeMySQL($conn, $_POST['caretaker_id']);
-		$query = "INSERT INTO pets VALUES(NULL, \"$name\", $age, \"$sex\", \"$species\", \"$caretaker_id\")";
-		$result = $conn->query($query);
+		$location = sanitizeMySQL($conn, $_POST['location']);			
+        $hours = sanitizeMySQL($conn, $_POST['hours']);
+        $boro_id = sanitizeMySQL($conn, $_POST['boro_id']);
+        $boro_name = sanitizeMySQL($conn, $_POST['boro_name']);
+        $gender = sanitizeMySQL($conn, $_POST['gender']);
+        $h_a = sanitizeMySQL($conn, $_POST['handicap_access']);
+        $c_t = sanitizeMySQL($conn, $_POST['change_table']);
+        $stalls = sanitizeMySQL($conn, $_POST['stalls']);
+
+        
+        $query = 'INSERT INTO `borough` VALUES(NULL, \"$boro_name\")';
+        $result = $conn->query($query);
+        $insertID = $conn->insert_id;
+
+        $query = 'INSERT INTO `location` VALUES(NULL, \"$name\", \"$location\", \"$hours\", NULL, \"$insertID\" )';
+        $result = $conn->query($query);
+        $insertID = $conn->insert_id;
+
+        $query = 'INSERT INTO `rooms` VALUES(NULL, \"$insertID\", \"$gender\", \"$h_a\", \"$c_t\", \"$stalls\" )';
+        $result = $conn->query($query);
+        
 		if (!$result) {
 			die ("Database access failed: " . $conn->error);
 		} else {
@@ -73,11 +81,13 @@ if (isset($_POST['submit'])) { //check if the form has been submitted
 	}
 }
 
+if (isset($message)) echo $message;
+
 function sanitizeString($var)
 {
 	$var = stripslashes($var);
 	$var = strip_tags($var);
-	$var = htmlentities($var);
+    $var = htmlentities($var);
 	return $var;
 }
 function sanitizeMySQL($connection, $var)
@@ -88,32 +98,36 @@ function sanitizeMySQL($connection, $var)
 }
 ?>
 
-<?php 
-if (isset($message)) echo $message;
-?>
-
-<form method="POST" action="results.php">
-	Borough 
-	<select name="borough">
-		<option value="Bronx">Bronx</option>
-		<option value="Brooklyn">Brooklyn</option>
+<h1>Add a public toilet</h1>
+<div class="form">
+    <form method="POST" action="">
+        Borough<br>
+        <select name="boro_name" size="1">
+        <option value="Bronx">Bronx</option>
+        <option value="Brooklyn">Brooklyn</option>
         <option value="Manhattan">Manhattan</option>
         <option value="Queens">Queens</option>
         <option value="Staten Island">Staten Island</option>
-    </select>
-    <div>Name <input type="text" name="name"></div>
-    <div>Location <input type="text" name="location"></div>
-    Gender<br>
-    <input type="checkbox" name="male" value="male">Male<br>
-    <input type="checkbox" name="female" value="female">Female<br>
-    <input type="checkbox" name="neutral" value="neutral">Neutral<br>
-	Handicap Access
-    <input type="checkbox" name="handicap_access" value="handicap accessible"><br>
-    Changing Tables
-    <input type="checkbox" name="change_table" value="changing tables"><br>
-	<input type="submit" value="Search">
-</form>
+        </select><br><br>
+        <div>Name <input type="text" name="name"></div><br>
+        <div>Location <input type="text" name="location"></div><br>
+        <div>Hours <input type="text" name="hours"></div><br>
+        Gender<br>
+        <input type="checkbox" name="gender[]" value="men">Men<br>
+        <input type="checkbox" name="gender[]" value="women">Women<br>
+        <input type="checkbox" name="gender[]" value="neutral">Neutral<br><br>
+	    Handicap Accessible
+        <input type="checkbox" name="handicap_access"><br><br>
+        Changing Tables
+        <input type="checkbox" name="change_table"><br><br>
+        <div>Number of Stalls <input type="text" name="stalls"></div><br><br>
+        <input type="submit" name="submit" value="Submit">
+    </form>
+</div>    
 
 <?php 
 include_once ("includes/footer.php"); 
 ?>
+
+</body>
+</html>

@@ -7,7 +7,7 @@
 <body>
 
 <?php
-print "<p class='footer'>Copyright ". date('Y') ."</p>";
+print "<p class='footer'> © ". date('Y') ." Phoebe Stein</p>";
 ?>
 </body>
 </html>

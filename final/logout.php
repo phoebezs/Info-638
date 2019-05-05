@@ -13,9 +13,7 @@ session_destroy();
 include_once ("includes/header.php");
 ?>
 
-
-You have logged out!
-
+<p>You have logged out!</p>
 
 <?php
 include_once ("includes/footer.php");
