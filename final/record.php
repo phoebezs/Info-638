@@ -12,7 +12,7 @@ include_once ("includes/header.php");
 #check for loc_id existing in GET
 if (isset($_GET["loc_id"]) && !empty($_GET["loc_id"]) ){
     #connect to db
-    $conn = new mysqli("localhost", "root", "", "pstein5");
+    $conn = new mysqli($hn, $un, $pw, $db);
 	if ($conn->connect_error) die($conn->connect_error);
     
     #sanitize data

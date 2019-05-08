@@ -10,13 +10,12 @@
 <?php
 include_once ("includes/header.php"); 
 
-#print_r($_GET);
 /*Search for a name across borough, location, and rooms tables, then add check boxes to search if checked
 check for submit in GET to tell if form was submitted by user and make sure they put in a search term */
 
 if (isset($_GET["submit"]) && isset($_GET["name"]) && !empty($_GET["name"]) ) {
 	# connect to db
-	$conn = new mysqli("localhost", "root", "", "pstein5");
+	$conn = new mysqli($hn, $un, $pw, $db);
 	if ($conn->connect_error) die($conn->connect_error);
     
     # sanitize data from form search box 
@@ -25,7 +24,6 @@ if (isset($_GET["submit"]) && isset($_GET["name"]) && !empty($_GET["name"]) ) {
 	# construct query
     $query = 'SELECT * FROM `borough` NATURAL JOIN `location` RIGHT JOIN `rooms` ON location.loc_id=rooms.room_id WHERE (name LIKE \'%'.$name.'%\')'; 
    
-
     # if checkbox was "on" then append to our query 
     if (isset($_GET["borough"]) && !empty($_GET["borough"]) ) {
 		$borough = $_GET["borough"];

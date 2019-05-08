@@ -11,7 +11,7 @@
 include_once ("includes/header.php"); 
 
 #connect to db
-$conn = new mysqli("localhost", "root", "", "pstein5");
+$conn = new mysqli($hn, $un, $pw, $db);
 if ($conn->connect_error) die($conn->connect_error);
     
 #construct query

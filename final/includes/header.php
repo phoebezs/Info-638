@@ -1,5 +1,4 @@
 <?php
-#header can include session info, sanitizing functions, database login info
 session_start();
 require_once 'includes/dblogin.php';
 ?>
