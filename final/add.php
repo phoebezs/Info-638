@@ -66,10 +66,19 @@ if (isset($_POST['submit'])) {
         $query = "INSERT INTO `location` VALUES(NULL, \"$name\", \"$location\", \"$hours\", NULL, \"$insertID\" )";
         $result = $conn->query($query);
         $insertID = $conn->insert_id;
-
-        $query = "INSERT INTO `rooms` VALUES(NULL, \"$insertID\", \"$gender\", \"$h_a\", \"$c_t\", \"$stalls\" )";
-        $result = $conn->query($query);
         
+        if (($h_a == on) || ($c_t == on) ){
+            $h_a = 1;
+            $c_t = 1;
+            $query = "INSERT INTO `rooms` VALUES(NULL, \"$insertID\", \"$gender\", \"$h_a\", \"$c_t\", \"$stalls\" )";
+            $result = $conn->query($query);
+        } else {
+            $h_a = 0;
+            $c_t = 0;
+            $query = "INSERT INTO `rooms` VALUES(NULL, \"$insertID\", \"$gender\", \"$h_a\", \"$c_t\", \"$stalls\" )";
+            $result = $conn->query($query);
+        }
+
 		if (!$result) {
 			die ("Database access failed: " . $conn->error);
 		} else {

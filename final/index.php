@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<html>
 
 <head>
 <title>NYC Public Toilets</title>
